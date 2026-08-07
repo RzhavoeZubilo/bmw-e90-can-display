@@ -1,0 +1,43 @@
+# Exported by three-d-stage
+newmtl petg_graphite
+Kd 0.0513 0.0578 0.0704
+Ks 0.2000 0.2000 0.2000
+Ns 56
+d 1.0000
+
+newmtl pcb_navy
+Kd 0.0110 0.0497 0.1470
+Ks 0.2000 0.2000 0.2000
+Ns 90
+d 1.0000
+
+newmtl plastic_black
+Kd 0.0048 0.0056 0.0070
+Ks 0.2000 0.2000 0.2000
+Ns 110
+d 1.0000
+
+newmtl metal_tin
+Kd 0.5841 0.6172 0.6724
+Ks 0.2000 0.2000 0.2000
+Ns 140
+d 1.0000
+
+newmtl pcb_black
+Kd 0.0086 0.0103 0.0137
+Ks 0.2000 0.2000 0.2000
+Ns 80
+d 1.0000
+
+newmtl oled_glass
+Kd 0.0030 0.0037 0.0052
+Ks 0.2000 0.2000 0.2000
+Ns 176
+d 1.0000
+
+newmtl oled_pixels
+Kd 0.7379 0.8963 1.0000
+Ks 0.2000 0.2000 0.2000
+Ns 120
+d 1.0000
+

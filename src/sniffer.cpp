@@ -142,6 +142,19 @@ static void census(const __FlashStringHelper* label) {
     return;
   }
 
+  // Сортируем по убыванию частоты: периодические кадры всплывают наверх,
+  // а редкие события оседают вниз. Выбором, n не больше 40.
+  for (uint8_t i = 0; i + 1 < n_ids; ++i) {
+    uint8_t mx = i;
+    for (uint8_t j = i + 1; j < n_ids; ++j)
+      if (tbl[j].count > tbl[mx].count) mx = j;
+    if (mx != i) {
+      Seen t = tbl[i];
+      tbl[i] = tbl[mx];
+      tbl[mx] = t;
+    }
+  }
+
   Serial.println(F("TRAFFIC -> broadcast bus. Hardware filters required."));
   Serial.println(F("id\tcount\tdata\t\tsignal"));
 
@@ -187,7 +200,11 @@ static void census(const __FlashStringHelper* label) {
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial) {}
+  // Ожидания готовности порта здесь нет намеренно: у ATmega328P
+  // operator bool() класса HardwareSerial всегда возвращает true, так что
+  // строка вида while (!Serial) была бы пустой формальностью. Она нужна
+  // только платам с нативным USB (Leonardo, Micro), где действительно
+  // подвесила бы устройство при автономном запуске без компьютера.
 
   const uint8_t clk =
 #if MCP2515_CRYSTAL_MHZ == 16
@@ -208,12 +225,18 @@ void setup() {
   census(F("100 kbit/s (K-CAN)"));
 
   reset_table();
-  can.begin(MCP_ANY, CAN_500KBPS, clk);
+  if (can.begin(MCP_ANY, CAN_500KBPS, clk) != CAN_OK) {
+    Serial.println(F("MCP2515 re-init at 500k FAILED"));
+    while (true) {}
+  }
   can.setMode(MCP_LISTENONLY);
   census(F("500 kbit/s (PT-CAN / D-CAN)"));
 
   // Свип идёт на 500: диагностика живёт только там.
-  can.begin(MCP_ANY, CAN_500KBPS, clk);
+  if (can.begin(MCP_ANY, CAN_500KBPS, clk) != CAN_OK) {
+    Serial.println(F("MCP2515 re-init for sweep FAILED"));
+    while (true) {}
+  }
   can.setMode(MCP_NORMAL);  // для передачи нужен нормальный режим
   Serial.println(F("== phase 2: PID sweep 0x00..0xA0 @ 500 kbit/s =="));
 }

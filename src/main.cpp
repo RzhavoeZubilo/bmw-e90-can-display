@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <Wire.h>
+#include <avr/wdt.h>
 
 #include <FastLED.h>
 #include <U8g2lib.h>
@@ -19,6 +20,8 @@ static MCP_CAN can(PIN_CAN_CS);
 static CRGB leds[NUM_LEDS];
 
 static PtCan pt;
+
+static const uint16_t BLINK_MS = 400;
 
 static bool can_ok = false;
 static Alert cur_alert = Alert::None;
@@ -83,15 +86,26 @@ static void update_alerts() {
   cur_alert = alerts::evaluate(d.coolant_c, PtCan::fresh(d.coolant_ms, now),
                                d.atf_c, PtCan::fresh(d.atf_ms, now));
 
-  if (cur_alert == Alert::None) {
-    fill_solid(leds, NUM_LEDS, CRGB::Black);
-  } else {
-    // Медленное мигание: перегрев двигателя красным, коробки — оранжевым.
-    const bool on = (now / 400) % 2;
-    const CRGB c = (cur_alert == Alert::CoolantHot) ? CRGB::Red : CRGB::OrangeRed;
-    fill_solid(leds, NUM_LEDS, on ? c : CRGB::Black);
+  // Желаемое состояние светодиода: 0 погашен, 1 красный (двигатель),
+  // 2 оранжевый (коробка). Медленное мигание — период BLINK_MS.
+  uint8_t want = 0;
+  if (cur_alert != Alert::None && (now / BLINK_MS) % 2)
+    want = (cur_alert == Alert::CoolantHot) ? 1 : 2;
+
+  // ВАЖНО: FastLED.show() на AVR запрещает прерывания на всё время
+  // передачи. Вызов на каждом проходе loop() держал бы процессор с
+  // выключенными прерываниями почти постоянно: начинает отставать millis(),
+  // а на нём висит вся логика протухания данных, ломается tone() и
+  // страдает приём по I2C. Поэтому дёргаем только при смене состояния —
+  // это пара раз в секунду вместо тысяч.
+  static uint8_t shown = 0xFF;
+  if (want != shown) {
+    shown = want;
+    fill_solid(leds, NUM_LEDS,
+               want == 0 ? CRGB::Black
+                         : (want == 1 ? CRGB::Red : CRGB::OrangeRed));
+    FastLED.show();
   }
-  FastLED.show();
 
   static Alert prev = Alert::None;
   if (cur_alert != Alert::None && prev != cur_alert) {
@@ -139,9 +153,21 @@ void setup() {
   FastLED.show();
 
   setup_can();
+
+  // Сторожевой таймер включается последним: инициализация дисплея и
+  // MCP2515 не должна его тревожить. Устройство живёт в машине без
+  // присмотра, зависший блок там никто не перезагрузит.
+  //
+  // Безопасно именно потому, что плата на новом загрузчике (Optiboot,
+  // board = nanoatmega328new): он сбрасывает флаг WDRF и снимает таймер
+  // при старте. Старый загрузчик после срабатывания WDT уходил в
+  // бесконечную перезагрузку.
+  wdt_enable(WDTO_2S);
 }
 
 void loop() {
+  wdt_reset();
+
   poll_rx();
   update_alerts();
 
