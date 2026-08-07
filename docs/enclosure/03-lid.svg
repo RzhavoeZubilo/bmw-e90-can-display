@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 380" width="480" height="380" role="img" aria-label="Вид на крышку сверху: окно дисплея 23 на 12.5 мм внутри посадочного кармана 27.6 мм, отверстие светодиода 5 мм, решётка зуммера из пяти отверстий 2 мм, четыре отверстия под винты по углам">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 400" width="480" height="400" role="img" aria-label="Вид на крышку сверху: окно дисплея 23 на 12.5 мм в посадочном кармане 27.6 мм, отверстие светодиода 5 мм, решётка зуммера из пяти отверстий 2 мм, слева сенсорная зона TTP-223 без отверстия с утоньшением стенки до 1.2 мм, четыре отверстия под винты по углам">
   <defs>
     <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,1 L9,5 L0,9 z" fill="#1B1F24"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="480" height="380" fill="#F2F4F6"/>
+  <rect x="0" y="0" width="480" height="400" fill="#F2F4F6"/>
 
   <rect x="70" y="60" width="336" height="248" fill="none" stroke="#1B1F24" stroke-width="2"/>
 
@@ -13,7 +13,7 @@
   <rect x="150" y="120" width="110" height="110" fill="none" stroke="#1B1F24" stroke-width="1.2" stroke-dasharray="6 4" opacity=".7"/>
   <text x="205" y="112" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#1B1F24" opacity=".75">карман 27.6 × 27.6 × 1.8</text>
 
-  <!-- окно -->
+  <!-- окно дисплея -->
   <rect x="159" y="146" width="92" height="15" fill="#B07708" opacity=".45"/>
   <rect x="159" y="146" width="92" height="50" fill="none" stroke="#0B5C86" stroke-width="2.2"/>
   <text x="205" y="181" font-family="ui-monospace, Menlo, monospace" font-size="11" text-anchor="middle" fill="#0B5C86">окно 23 × 12.5</text>
@@ -30,6 +30,15 @@
   <circle cx="330" cy="256" r="4" fill="none" stroke="#1B1F24" stroke-width="1.4"/>
   <text x="320" y="280" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#1B1F24" opacity=".75">5 × ⌀2 зуммер</text>
 
+  <!-- сенсорная зона TTP-223: отверстия НЕТ, стенка утоньшена -->
+  <rect x="84" y="160" width="60" height="44" fill="none" stroke="#1B1F24" stroke-width="1.2" stroke-dasharray="6 4" opacity=".7"/>
+  <circle cx="114" cy="182" r="28" fill="#0B5C86" opacity=".13"/>
+  <circle cx="114" cy="182" r="28" fill="none" stroke="#0B5C86" stroke-width="2" stroke-dasharray="7 5"/>
+  <circle cx="114" cy="182" r="33" fill="none" stroke="#1B1F24" stroke-width="1.4" opacity=".55"/>
+  <text x="114" y="140" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">TTP-223</text>
+  <text x="114" y="232" font-family="ui-monospace, Menlo, monospace" font-size="10" text-anchor="middle" fill="#0B5C86">⌀14, стенка 1.2</text>
+  <text x="114" y="246" font-family="ui-monospace, Menlo, monospace" font-size="10" text-anchor="middle" fill="#0B5C86">БЕЗ отверстия</text>
+
   <!-- отверстия под винты -->
   <circle cx="92" cy="82" r="7" fill="none" stroke="#1B1F24" stroke-width="1.4"/>
   <circle cx="384" cy="82" r="7" fill="none" stroke="#1B1F24" stroke-width="1.4"/>
@@ -41,5 +50,12 @@
   <line x1="159" y1="330" x2="251" y2="330" stroke="#1B1F24" stroke-width="1" marker-start="url(#ar3)" marker-end="url(#ar3)"/>
   <text x="205" y="348" font-family="ui-monospace, Menlo, monospace" font-size="11" text-anchor="middle" fill="#1B1F24">23</text>
 
-  <text x="238" y="372" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#1B1F24" opacity=".65">жёлтая заливка — физическая полоса матрицы, строки 0–15</text>
+  <!-- легенда -->
+  <line x1="70" y1="366" x2="94" y2="366" stroke="#0B5C86" stroke-width="2.2"/>
+  <text x="102" y="370" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#1B1F24" opacity=".8">сплошной контур — сквозное отверстие</text>
+  <line x1="70" y1="386" x2="94" y2="386" stroke="#0B5C86" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="102" y="390" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#1B1F24" opacity=".8">пунктир — утоньшение, материал остаётся</text>
+
+  <text x="290" y="372" font-family="ui-monospace, Menlo, monospace" font-size="10" text-anchor="middle" fill="#1B1F24" opacity=".65">жёлтая заливка — физическая полоса</text>
+  <text x="290" y="386" font-family="ui-monospace, Menlo, monospace" font-size="10" text-anchor="middle" fill="#1B1F24" opacity=".65">матрицы, строки 0–15</text>
 </svg>
