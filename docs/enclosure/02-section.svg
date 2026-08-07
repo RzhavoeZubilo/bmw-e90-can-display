@@ -14,27 +14,27 @@
   <rect x="0" y="0" width="560" height="300" fill="#F2F4F6"/>
 
   <!-- крышка -->
-  <rect x="30" y="60" width="504" height="15" fill="url(#hatch)" stroke="#1B1F24" stroke-width="1.6"/>
+  <rect x="30" y="60" width="504" height="18" fill="url(#hatch)" stroke="#1B1F24" stroke-width="1.6"/>
   <!-- стенки -->
-  <rect x="30" y="75" width="12" height="129" fill="url(#hatch)" stroke="#1B1F24" stroke-width="1.6"/>
-  <rect x="522" y="75" width="12" height="129" fill="url(#hatch)" stroke="#1B1F24" stroke-width="1.6"/>
+  <rect x="30" y="78" width="12" height="126" fill="url(#hatch)" stroke="#1B1F24" stroke-width="1.6"/>
+  <rect x="522" y="78" width="12" height="126" fill="url(#hatch)" stroke="#1B1F24" stroke-width="1.6"/>
   <!-- донная пластина -->
   <rect x="30" y="204" width="504" height="12" fill="url(#hatch)" stroke="#1B1F24" stroke-width="1.6"/>
 
   <!-- лунка под палец СНАРУЖИ: фаски 45°, материал остаётся снизу -->
-  <path d="M84,60 L92,68 L172,68 L180,60 Z" fill="#F2F4F6" stroke="#0B5C86" stroke-width="1.8"/>
-  <text x="132" y="30" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">лунка ⌀16, глубина 1.3</text>
+  <path d="M84,60 L95,71 L169,71 L180,60 Z" fill="#F2F4F6" stroke="#0B5C86" stroke-width="1.8"/>
+  <text x="132" y="30" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">лунка ⌀16, глубина 1.8</text>
 
   <!-- TTP-223 прижат к крышке изнутри -->
-  <rect x="96" y="75" width="72" height="12" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
-  <text x="132" y="105" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#1B1F24">TTP-223</text>
+  <rect x="96" y="78" width="72" height="12" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
+  <text x="132" y="108" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#1B1F24">TTP-223</text>
 
   <!-- окно дисплея -->
-  <rect x="246" y="60" width="92" height="15" fill="#F2F4F6" stroke="#0B5C86" stroke-width="2"/>
+  <rect x="246" y="60" width="92" height="18" fill="#F2F4F6" stroke="#0B5C86" stroke-width="2"/>
 
   <!-- дисплей -->
-  <rect x="211" y="75" width="162" height="24" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
-  <text x="292" y="91" font-family="ui-monospace, Menlo, monospace" font-size="11" text-anchor="middle" fill="#1B1F24">OLED 27 × 27</text>
+  <rect x="211" y="78" width="162" height="24" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
+  <text x="292" y="94" font-family="ui-monospace, Menlo, monospace" font-size="11" text-anchor="middle" fill="#1B1F24">OLED 27 × 27</text>
 
   <!-- MCP2515 -->
   <rect x="60" y="120" width="240" height="84" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
@@ -45,18 +45,18 @@
   <text x="450" y="173" font-family="ui-monospace, Menlo, monospace" font-size="11.5" text-anchor="middle" fill="#1B1F24">Nano · h 12</text>
 
   <!-- зазор под сенсором -->
-  <line x1="132" y1="87" x2="132" y2="120" stroke="#0B5C86" stroke-width="1.4" marker-start="url(#ar2b)" marker-end="url(#ar2b)"/>
-  <text x="142" y="116" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#0B5C86">5.5</text>
+  <line x1="132" y1="90" x2="132" y2="120" stroke="#0B5C86" stroke-width="1.4" marker-start="url(#ar2b)" marker-end="url(#ar2b)"/>
+  <text x="142" y="116" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#0B5C86">5</text>
 
   <!-- зазор под дисплеем -->
-  <line x1="318" y1="99" x2="318" y2="120" stroke="#0B5C86" stroke-width="1.4" marker-start="url(#ar2b)" marker-end="url(#ar2b)"/>
+  <line x1="318" y1="102" x2="318" y2="120" stroke="#0B5C86" stroke-width="1.4" marker-start="url(#ar2b)" marker-end="url(#ar2b)"/>
   <text x="330" y="115" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#0B5C86">3</text>
 
   <!-- общая высота -->
   <line x1="552" y1="60" x2="552" y2="216" stroke="#1B1F24" stroke-width="1" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
   <text x="544" y="142" font-family="ui-monospace, Menlo, monospace" font-size="12" text-anchor="end" fill="#1B1F24">26</text>
 
-  <text x="22" y="71" font-family="ui-monospace, Menlo, monospace" font-size="10" text-anchor="end" fill="#1B1F24" opacity=".7">2.5</text>
+  <text x="22" y="71" font-family="ui-monospace, Menlo, monospace" font-size="10" text-anchor="end" fill="#1B1F24" opacity=".7">3.0</text>
   <text x="22" y="214" font-family="ui-monospace, Menlo, monospace" font-size="10" text-anchor="end" fill="#1B1F24" opacity=".7">2.0</text>
   <text x="292" y="46" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">окно 23 × 12.5</text>
   <text x="132" y="46" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">остаётся 1.2</text>

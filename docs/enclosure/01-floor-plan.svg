@@ -50,9 +50,11 @@
   <text x="336" y="38" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">12 × 7</text>
 
   <!-- кабельный ввод -->
-  <circle cx="150" cy="74" r="14" fill="#F2F4F6" stroke="#0B5C86" stroke-width="2"/>
-  <text x="150" y="38" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">ввод ⌀7</text>
-  <text x="150" y="52" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">4 провода</text>
+  <circle cx="282" cy="74" r="14" fill="#F2F4F6" stroke="#0B5C86" stroke-width="2"/>
+  <text x="240" y="38" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">ввод ⌀7</text>
+  <text x="240" y="52" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="middle" fill="#0B5C86">4 провода</text>
+  <rect x="270" y="94" width="24" height="16" fill="none" stroke="#1B1F24" stroke-width="1.4"/>
+  <text x="282" y="124" font-family="ui-monospace, Menlo, monospace" font-size="9" text-anchor="middle" fill="#1B1F24" opacity=".75">стяжка</text>
 
   <!-- размеры -->
   <line x1="70" y1="352" x2="406" y2="352" stroke="#1B1F24" stroke-width="1" marker-start="url(#ar)" marker-end="url(#ar)"/>
