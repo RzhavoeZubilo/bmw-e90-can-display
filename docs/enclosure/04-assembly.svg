@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" width="480" height="300" role="img" aria-label="Разнесённая схема сборки сверху вниз: крышка с окном, плата дисплея в карман, корпус с модулями на дне, донная пластина на четырёх винтах M3">
+  <defs>
+    <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="#0B5C86"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="480" height="300" fill="#F2F4F6"/>
+
+  <!-- крышка -->
+  <path d="M120,44 L300,44 L360,20 L180,20 Z" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
+  <rect x="186" y="26" width="54" height="12" fill="#0B5C86" opacity=".32"/>
+  <text x="372" y="36" font-family="ui-monospace, Menlo, monospace" font-size="11.5" fill="#1B1F24">крышка + окно</text>
+
+  <!-- дисплей -->
+  <path d="M170,100 L250,100 L310,76 L230,76 Z" fill="none" stroke="#1B1F24" stroke-width="1.4"/>
+  <text x="372" y="92" font-family="ui-monospace, Menlo, monospace" font-size="11.5" fill="#1B1F24">OLED в карман</text>
+
+  <!-- корпус с модулями -->
+  <path d="M120,180 L300,180 L360,156 L180,156 Z" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
+  <path d="M120,180 L120,206 L300,206 L300,180" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
+  <path d="M300,180 L360,156 L360,182 L300,206" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
+  <rect x="146" y="162" width="70" height="14" fill="#1B1F24" opacity=".16"/>
+  <rect x="240" y="162" width="50" height="14" fill="#1B1F24" opacity=".16"/>
+  <text x="372" y="180" font-family="ui-monospace, Menlo, monospace" font-size="11.5" fill="#1B1F24">модули на дне</text>
+
+  <!-- донная пластина -->
+  <path d="M120,258 L300,258 L360,234 L180,234 Z" fill="none" stroke="#1B1F24" stroke-width="1.6"/>
+  <text x="372" y="250" font-family="ui-monospace, Menlo, monospace" font-size="11.5" fill="#1B1F24">дно + 4 × M3</text>
+
+  <!-- направление сборки -->
+  <line x1="88" y1="250" x2="88" y2="46" stroke="#0B5C86" stroke-width="1.6" marker-end="url(#ar4)"/>
+  <text x="78" y="152" font-family="ui-monospace, Menlo, monospace" font-size="10.5" text-anchor="end" fill="#0B5C86">сборка</text>
+</svg>
