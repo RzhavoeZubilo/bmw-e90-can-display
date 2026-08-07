@@ -143,54 +143,60 @@ struct Scenario {
 static std::vector<Scenario> build_scenarios() {
   std::vector<Scenario> out;
 
-  {
-    // Прогретая машина в движении. Значения правдоподобные для N46 + 6HP19.
+  auto warm = []() {
     ScreenData d;
     d.coolant_c = 91;   d.coolant_ok = true;
     d.atf_c = 78;       d.atf_ok = true;
     d.oil_c = 105;      d.oil_ok = true;
     d.volts_mv = 14192; d.volts_ok = true;
-    out.push_back({"1. PT-CAN, cruising", d});
+    return d;
+  };
+
+  {
+    ScreenData d = warm();
+    out.push_back({"1. Screen 1: overview", d});
   }
   {
-    // Перегрев коробки: порог 130 по ZF 6HP19.
-    ScreenData d;
-    d.coolant_c = 98;   d.coolant_ok = true;
-    d.atf_c = 134;      d.atf_ok = true;
-    d.oil_c = 112;      d.oil_ok = true;
-    d.volts_mv = 14020; d.volts_ok = true;
-    d.alert = Alert::AtfHot;
-    out.push_back({"2. Gearbox overheat", d});
+    ScreenData d = warm();
+    d.screen = ScreenId::Coolant;
+    out.push_back({"2. Screen 2: coolant", d});
   }
   {
-    // Перегрев двигателя перебивает перегрев коробки.
-    ScreenData d;
-    d.coolant_c = 117;  d.coolant_ok = true;
-    d.atf_c = 141;      d.atf_ok = true;
-    d.oil_c = 128;      d.oil_ok = true;
-    d.volts_mv = 13980; d.volts_ok = true;
+    ScreenData d = warm();
+    d.screen = ScreenId::Voltage;
+    out.push_back({"3. Screen 3: battery", d});
+  }
+  {
+    // Перегрев виден на любом экране: тревога живёт в жёлтой полосе.
+    ScreenData d = warm();
+    d.screen = ScreenId::Coolant;
+    d.coolant_c = 117;
     d.alert = Alert::CoolantHot;
-    out.push_back({"3. Coolant overheat", d});
+    out.push_back({"4. Coolant overheat", d});
   }
   {
-    // Холодный пуск зимой, стоим на месте.
+    // Холодный пуск: отрицательная температура рисуется вручную,
+    // в наборе logisoso28_tn минуса нет.
     ScreenData d;
-    d.coolant_c = 14;   d.coolant_ok = true;
-    d.atf_c = -8;       d.atf_ok = true;
-    d.oil_c = 12;       d.oil_ok = true;
-    d.volts_mv = 14610; d.volts_ok = true;
-    out.push_back({"4. Cold start", d});
+    d.screen = ScreenId::Coolant;
+    d.coolant_c = -12;  d.coolant_ok = true;
+    out.push_back({"5. Below zero", d});
   }
   {
-    // MCP2515 не поднялся: кварц, обрыв CS или терминатор 120 Ом.
     ScreenData d;
-    d.can_ok = false;
-    out.push_back({"5. CAN init failed", d});
+    d.learn = LearnPhase::Baseline;
+    d.learn_secs = 12;
+    out.push_back({"6. Learn: baseline", d});
   }
   {
-    // Зажигание выключено: шина замолчала, данные протухли.
     ScreenData d;
-    out.push_back({"6. Bus silent", d});
+    d.learn = LearnPhase::Hold;
+    out.push_back({"7. Learn: hold button", d});
+  }
+  {
+    ScreenData d;
+    d.learn = LearnPhase::Saved;
+    out.push_back({"8. Learn: saved", d});
   }
 
   return out;

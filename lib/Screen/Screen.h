@@ -11,7 +11,29 @@
 // симулятор (sim/) показывает настоящую картинку прошивки, а не макет,
 // который со временем разъедется с кодом.
 
+// Экраны листаются кнопкой руля. Первый — обзорный, дальше по одному
+// параметру крупно.
+enum class ScreenId : uint8_t {
+  All = 0,   // все параметры разом
+  Coolant,   // температура ОЖ с иконкой
+  Voltage,   // напряжение бортсети
+  COUNT
+};
+
+// Обучение кнопки руля показывается поверх всего остального.
+enum class LearnPhase : uint8_t {
+  None = 0,
+  Baseline,  // ничего не трогаем, копим фон
+  Hold,      // удерживаем нужную кнопку
+  Saved,     // привязка записана
+  Failed     // не нашли, работаем без кнопки
+};
+
 struct ScreenData {
+  ScreenId screen = ScreenId::All;
+  LearnPhase learn = LearnPhase::None;
+  uint8_t learn_secs = 0;
+
   bool can_ok = true;
   Alert alert = Alert::None;
 
