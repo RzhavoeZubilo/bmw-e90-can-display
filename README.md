@@ -114,6 +114,7 @@ docs/enclosure.md       эскиз корпуса под 3D-печать
 docs/wiring.md          распайка и порядок сборки
 docs/components.md      справка по компонентам и работе с ними
 docs/cluster-menu.md    скрытое меню приборки: что показывает штатно
+docs/rad2-coding.md     магнитола RAD2: почему не кодируется, индексы
 docs/diag-jobs.md       запросы к блокам, извлечённые из SP-Daten
 tools/sgbd_extract.py   извлекатель телеграмм из SGBD
 cad/enclosure.scad      параметрическая модель корпуса (OpenSCAD)
