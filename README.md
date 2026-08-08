@@ -112,6 +112,8 @@ src/sniffer.cpp         разведка шины и свип PID
 docs/field-test.md      инструкция по разведке на машине
 docs/enclosure.md       эскиз корпуса под 3D-печать
 docs/wiring.md          распайка и порядок сборки
+docs/diag-jobs.md       запросы к блокам, извлечённые из SP-Daten
+tools/sgbd_extract.py   извлекатель телеграмм из SGBD
 cad/enclosure.scad      параметрическая модель корпуса (OpenSCAD)
 sim/                    симулятор дисплея для macOS
 test/                   нативные тесты (49 шт.)
