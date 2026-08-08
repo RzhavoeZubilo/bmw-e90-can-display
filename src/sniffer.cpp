@@ -273,7 +273,26 @@ void loop() {
   can.sendMsgBuf(REQ_ID, 0, 8, req);
 
   if (pid == 0xA0) {
-    Serial.println(F("== sweep done, restarting =="));
+    // Фаза 3: адресный запрос к DME на PT-CAN. Печатается сырой ответ —
+    // по нему проверяется раскладка, которую lib/Diag пока лишь выводит
+    // из порядка результатов в SGBD, а не знает наверняка.
+    Serial.println(F("== phase 3: DME intake temp, raw response =="));
+    uint8_t r[8] = {0x03, 0x30, 0x0A, 0x01, 0x55, 0x55, 0x55, 0x55};
+    Serial.println(F("-> 0x600  03 30 0A 01"));
+    can.sendMsgBuf(0x600, 0, 8, r);
+    delay(200);
+    while (digitalRead(PIN_CAN_INT) == LOW) {
+      unsigned long id = 0;
+      uint8_t len = 0, buf[8];
+      if (can.readMsgBuf(&id, &len, buf) != CAN_OK) break;
+      if ((id & 0x7FFul) != 0x608) continue;
+      Serial.print(F("   <- 0x608  "));
+      for (uint8_t i = 0; i < len; ++i) { print_hex(buf[i]); Serial.print(' '); }
+      Serial.println();
+      Serial.println(F("   байты 6-7 при делении на 16 должны дать разумную"));
+      Serial.println(F("   температуру впуска; если нет — раскладка иная"));
+    }
+    Serial.println(F("== done, restarting =="));
     pid = 0x00;
   } else {
     ++pid;

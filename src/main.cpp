@@ -10,6 +10,7 @@
 
 #include "Alerts.h"
 #include "BtnLearn.h"
+#include "Diag.h"
 #include "Buttons.h"
 #include "PtCan.h"
 #include "Screen.h"
@@ -23,6 +24,11 @@ static MCP_CAN can(PIN_CAN_CS);
 static CRGB leds[NUM_LEDS];
 
 static PtCan pt;
+static Diag dg;
+
+// Опрос впуска раз в секунду: чаще незачем, а шину лишний раз не трогаем.
+static const uint16_t DIAG_PERIOD_MS = 1000;
+static uint32_t diag_last_ms = 0;
 
 static const uint16_t BLINK_MS = 400;
 
@@ -79,6 +85,7 @@ static const uint32_t kWanted[] = {
     ptcan::ID_EGS_TORQUE,  // 0x0B5 температура масла АКПП
     ptcan::ID_ENGINE_DATA, // 0x1D0 ОЖ и масло двигателя
     ptcan::ID_BATTERY,     // 0x3B4 напряжение
+    diag::DME_RESP,        // 0x608 ответ DME на наш запрос впуска
 };
 static const uint8_t N_WANTED = sizeof(kWanted) / sizeof(kWanted[0]);
 
@@ -117,8 +124,11 @@ static void setup_can() {
     }
   }
 
-  // Только слушаем. В моторную шину машины мы ничего не передаём.
-  can.setMode(MCP_LISTENONLY);
+  // NORMAL, а не LISTENONLY: устройство опрашивает DME о температуре
+  // впуска, а для этого нужно передавать. Это осознанная смена посадки —
+  // до появления опроса прошивка физически не могла отправить ни кадра.
+  // Запрос ровно один, раз в секунду; см. docs/diag-jobs.md.
+  can.setMode(MCP_NORMAL);
   pinMode(PIN_CAN_INT, INPUT);
 }
 
@@ -138,6 +148,7 @@ static void poll_rx() {
     const uint16_t cid = static_cast<uint16_t>(id & 0x7FFul);
 
     pt.apply(cid, buf, len, now);
+    dg.apply(cid, buf, len, now);
 
     if (learn_phase == LearnPhase::Baseline) {
       learner.observe_baseline(cid, buf, len);
@@ -152,6 +163,17 @@ static void poll_rx() {
       btn_level = BtnLearn::pressed(binding, cid, buf, len);
     }
   }
+}
+
+static void poll_diag() {
+  const uint32_t now = millis();
+  if (!can_ok || learn_phase != LearnPhase::None) return;
+  if (now - diag_last_ms < DIAG_PERIOD_MS) return;
+  diag_last_ms = now;
+
+  uint8_t req[8];
+  Diag::build_request(diag::INTAKE_PAYLOAD, diag::INTAKE_PAYLOAD_LEN, req);
+  can.sendMsgBuf(diag::DME_REQ, 0, 8, req);
 }
 
 static void update_alerts() {
@@ -257,9 +279,11 @@ static void draw() {
   sd.oil_ok = PtCan::fresh(d.oil_ms, now);
   sd.volts_mv = d.volts_mv;
   sd.volts_ok = PtCan::fresh(d.volts_ms, now);
-  // Температура впуска и топливо на PT-CAN пока не найдены — см. README,
-  // раздел про разведку. Места в вёрстке готовы.
-  sd.iat_ok = false;
+  sd.iat_c = dg.data().iat_c;
+  sd.iat_ok = Diag::fresh(dg.data().iat_ms, now);
+
+  // Топливо остаётся пустым: KOMBI не на PT-CAN, а масштаб ответа
+  // STATUS_TANKINHALT в SGBD не задокументирован. См. docs/diag-jobs.md.
   sd.fuel_ok = false;
   sd.tanks_ok = false;
 
@@ -302,6 +326,7 @@ void loop() {
   wdt_reset();
 
   poll_rx();
+  poll_diag();
   poll_learn();
   poll_button();
   update_alerts();
